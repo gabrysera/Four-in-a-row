@@ -1,6 +1,6 @@
 import abc
-from NRow.Board import *
-from NRow.Heuristic import *
+from NRow.Board import Board
+from NRow.Heuristic import Heuristic
 
 from __future__ import annotations
 
