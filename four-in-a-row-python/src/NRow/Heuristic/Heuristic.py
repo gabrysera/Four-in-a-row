@@ -73,6 +73,9 @@ class Heuristic(ABC):
         self.evalCount += 1
         return self.evaluate(player, board)
 
+    def __str__(self) -> str:
+        return ""
+
     @abstractmethod
     def evaluate(self, player:int, board:Board) -> int:
         pass
