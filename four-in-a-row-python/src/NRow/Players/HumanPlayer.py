@@ -12,9 +12,9 @@ class HumanPlayer(PlayerController):
         board.printBoard()
 
         if Heuristic is not None:
-            print("heuristic " + self.heuristic.toString() + " calculated the best move is: "
+            print("heuristic " + self.heuristic.__str__() + " calculated the best move is: "
              + str(self.heuristic.getBestAction(self.playerId, self.board) + 1))
-        print("Player " + self.toString() + "\nWhich column would you like to play in?")
+        print("Player " + self.__str__() + "\nWhich column would you like to play in?")
 
         column = input()
         print(f"Selected Column: {column}")

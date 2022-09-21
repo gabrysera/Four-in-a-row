@@ -17,7 +17,7 @@ class PlayerController(abc.ABCMeta):
         return Heuristic.getEvalCount()
 
     #string representation of player for board
-    def toString(self):
+    def __str__(self):
         if self.playerId == 2:
             return "O"
         else:
