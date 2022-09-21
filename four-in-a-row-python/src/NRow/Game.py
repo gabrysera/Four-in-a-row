@@ -13,6 +13,7 @@ class Game:
         self.winner = -1
         self.gameBoard:Board = Board(boardWidth, boardHeight)
 
+    #start game and keep make players move until game is finished, return the idplayer that win
     def startGame(self) -> int:
         print("start game!")
         currentPlayer = 0
