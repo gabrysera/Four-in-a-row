@@ -20,7 +20,7 @@ class Heuristic(ABC):
         """
         utilities = self.eval_actions(player, board)
         best_action = 0
-        for i in range(utilities.length):
+        for i in range(len(utilities)):
             best_action = i if utilities[i] > utilities[best_action] else best_action
 
         return best_action
