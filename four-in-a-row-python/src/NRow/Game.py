@@ -62,9 +62,9 @@ class Game:
                     if player != 0:
                         return player
 
-        #acending diagonal check
-        for i in range(0, len(board) - gameN - 1):
-            for j in range(len(board[i]) - 1, gameN-1, -1):
+        #ascending diagonal check
+        for i in range(0, len(board) - gameN + 1):
+            for j in range(len(board[i]) - 1, gameN, -1):
                 if board[i][j] != 0:
                     player = board[i][j]
                     for x in range(1,gameN):
