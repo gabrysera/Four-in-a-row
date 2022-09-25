@@ -30,7 +30,7 @@ class Board:
         for i in range(len(self.boardState[0])-1, 0, -1): #check column starting from the bottom
             if self.boardState[x][i] == 0:
                 self.boardState[x][i] = playerId
-            return True
+                return True
         return False
 
     #check if a move is valid
