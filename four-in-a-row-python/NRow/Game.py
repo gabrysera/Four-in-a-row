@@ -19,8 +19,10 @@ class Game:
         currentPlayer = 0
 
         while(not self.isOver()):
-            self.gameBoard.play(self.players[currentPlayer].makeMove(self.gameBoard), self.players[currentPlayer].playerId)
-            currentPlayer = 1 if currentPlayer == 0 else 0
+            if self.gameBoard.play(self.players[currentPlayer].makeMove(self.gameBoard), self.players[currentPlayer].playerId):
+                currentPlayer = 1 if currentPlayer == 0 else 0
+            else:
+                print("Illegal move!!")
 
         self.gameBoard.printBoard()
         if self.winner < 0:

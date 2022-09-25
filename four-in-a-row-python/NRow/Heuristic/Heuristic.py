@@ -24,6 +24,7 @@ class Heuristic(ABC):
             int: column integer
         """
         utilities = self.evalActions(player, board)
+        print("utilities:",utilities)
         best_action = 0
         for i in range(0, len(utilities)):
             best_action = i if utilities[i] > utilities[best_action] else best_action
@@ -42,7 +43,7 @@ class Heuristic(ABC):
         """
         utilities = []
         for i in range(0, board.width):
-            utilities.append(self.evaluateAction(player, i, board))
+            utilities.append(self.evaluateAction(player, i, Board(board=board)))
         return utilities
 
     def evaluateAction(self, player:int, action:int, board:Board) -> int:

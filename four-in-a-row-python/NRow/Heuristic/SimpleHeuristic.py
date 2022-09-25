@@ -60,4 +60,6 @@ class SimpleHeuristic(Heuristic):
                             max_in_row = max(max_in_row, a + 1)
                         else:
                             break
+        print("max: ", max_in_row)
+        board.printBoard()
         return max_in_row

@@ -27,7 +27,7 @@ class Board:
 
     #player ID make a move in column x
     def play(self, x:int, playerId:int) -> bool:
-        for i in range(len(self.boardState[0])-1, 0, -1): #check column starting from the bottom
+        for i in range(len(self.boardState[0])-1, -1, -1): #check column starting from the bottom
             if self.boardState[x][i] == 0:
                 self.boardState[x][i] = playerId
                 return True
@@ -40,9 +40,9 @@ class Board:
     #Gets a new board given a player and their action (WHY DO WE NEED THIS?)
     def getNewBoard(self, x:int, playerId:int) -> Board:
         newBoardState = self.getBoardState()
-        for i in range(len(newBoardState[0])-1, 0, -1): #check column starting from the bottom
+        for i in range(len(newBoardState[0])-1, -1, -1): #check column starting from the bottom
             if newBoardState[x][i] == 0:
-                self.boardState[x][i] = playerId
+                newBoardState[x][i] = playerId
                 return Board(boardState = newBoardState) #maybe put a break instead of double return
         return Board(boardState = newBoardState)
 
