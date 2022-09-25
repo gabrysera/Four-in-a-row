@@ -30,7 +30,6 @@ class Board:
         for i in range(len(self.boardState[0])-1, 0, -1): #check column starting from the bottom
             if self.boardState[x][i] == 0:
                 self.boardState[x][i] = playerId
-                print("how many times here")
                 return True
         return False
 

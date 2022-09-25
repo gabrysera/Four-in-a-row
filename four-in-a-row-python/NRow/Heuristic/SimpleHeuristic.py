@@ -36,11 +36,11 @@ class SimpleHeuristic(Heuristic):
         # If not winning or losing, return highest number of claimed squares in a row
 
         max_in_row = 0
-        for i in range(len(board_state)):
-            for j in range(len(board_state[i])):
+        for i in range(0, len(board_state)):
+            for j in range(0, len(board_state[i])):
                 if board_state[i][j] == player:
                     max_in_row =  max(max_in_row, 1)
-                    for x in range(1, len(board_state)- i):
+                    for x in range(1, len(board_state) - i):
                         if board_state[i + x][j] == player:
                             max_in_row = max(max_in_row, x + 1)
                         else:

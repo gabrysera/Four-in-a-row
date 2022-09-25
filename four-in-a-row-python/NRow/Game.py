@@ -21,7 +21,6 @@ class Game:
         while(not self.isOver()):
             self.gameBoard.play(self.players[currentPlayer].makeMove(self.gameBoard), self.players[currentPlayer].playerId)
             currentPlayer = 1 if currentPlayer == 0 else 0
-            print(currentPlayer, "while")
 
         self.gameBoard.printBoard()
         if self.winner < 0:
