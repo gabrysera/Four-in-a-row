@@ -3,16 +3,16 @@ from __future__ import annotations
 class Board:
 
     #constructor
-    def __init__(self, width:int = 0, height:int = 0, board:Board = None, boardState = [[]]):
+    def __init__(self, width:int = 0, height:int = 0, board:Board = None, boardState:list(list(int)) = [[]]):
         if board is not None:
-            self.__setBoardParameters(board.width, board.height, board.boardState)
+            self.__setBoardParameters(board.width, board.height, board.getBoardState())
         elif boardState != [[]]:
             self.__setBoardParameters(len(boardState), len(boardState[0]), boardState)
         else:
             self.__setBoardParameters(width, height, [[0 for x in range(height)] for y in range(width)])
     
     #function used to abstract different constructors
-    def __setBoardParameters(self, width:int = 0, height:int = 0, boardState = [[]]):
+    def __setBoardParameters(self, width:int = 0, height:int = 0, boardState:list(list(int)) = []):
         self.width = width
         self.height = height
         self.boardState = boardState
@@ -23,13 +23,14 @@ class Board:
 
     #get a copy of the state
     def getBoardState(self) -> list(list(int)):
-        return [row[:] for row in self.boardState]
+        return [row.copy() for row in self.boardState]
 
     #player ID make a move in column x
     def play(self, x:int, playerId:int) -> bool:
         for i in range(len(self.boardState[0])-1, 0, -1): #check column starting from the bottom
             if self.boardState[x][i] == 0:
                 self.boardState[x][i] = playerId
+                print("how many times here")
                 return True
         return False
 
@@ -64,7 +65,7 @@ class Board:
                 if self.boardState[j][i] == 1:
                     node = "X"
                 elif self.boardState[j][i] == 2:
-                    node = "0"
+                    node = "O"
                 output += "| " + node + " "
             output += "|"
         output += "\n" + divider2 + "\n" + numberRow + "\n"
