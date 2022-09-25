@@ -27,7 +27,7 @@ class Board:
 
     #player ID make a move in column x
     def play(self, x:int, playerId:int) -> bool:
-        for i in range(len(self.getBoardState[0])-1, 0, -1): #check column starting from the bottom
+        for i in range(len(self.boardState[0])-1, 0, -1): #check column starting from the bottom
             if self.boardState[x][i] == 0:
                 self.boardState[x][i] = playerId
             return True
@@ -48,7 +48,8 @@ class Board:
 
     #print board
     def printBoard(self):
-        divider, divider2 = " "
+        divider = " "
+        divider2 = " "
         numberRow = "|"
         output = ""
         for i in range(0, len(self.boardState)):

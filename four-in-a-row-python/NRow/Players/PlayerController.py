@@ -1,10 +1,10 @@
-import abc
-from NRow.Board import Board
-from NRow.Heuristic import Heuristic
-
 from __future__ import annotations
+from abc import ABC, abstractmethod
+from ..Board import Board
+from ..Heuristic.Heuristic import Heuristic
 
-class PlayerController(abc.ABCMeta):
+
+class PlayerController(ABC):
     
     #constructor
     def __init__(self, playerId:int, gameN:int, heuristic:Heuristic):
@@ -14,7 +14,7 @@ class PlayerController(abc.ABCMeta):
 
     #how many time the heuristic was used to evaluate a boardstate
     def getEvalCount(self):
-        return Heuristic.getEvalCount()
+        return self.heuristic.getEvalCount()
 
     #string representation of player for board
     def __str__(self):
@@ -24,6 +24,6 @@ class PlayerController(abc.ABCMeta):
             return "X"
 
     #abstract method for player classes
-    @abc.abstractmethod
+    @abstractmethod
     def makeMove(self, board:Board) -> int:
         pass

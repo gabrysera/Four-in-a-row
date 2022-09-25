@@ -1,6 +1,6 @@
-from NRow.Board import Board
-from NRow.Heuristic import Heuristic
-import PlayerController
+from ..Board import Board
+from ..Heuristic import Heuristic
+from .PlayerController import PlayerController
 
 class HumanPlayer(PlayerController):
 
@@ -13,9 +13,9 @@ class HumanPlayer(PlayerController):
 
         if Heuristic is not None:
             print("heuristic " + self.heuristic.__str__() + " calculated the best move is: "
-             + str(self.heuristic.getBestAction(self.playerId, self.board) + 1))
+             + str(self.heuristic.getBestAction(self.playerId, board) + 1))
         print("Player " + self.__str__() + "\nWhich column would you like to play in?")
 
-        column = input()
+        column = int(input())
         print(f"Selected Column: {column}")
         return column-1

@@ -1,10 +1,13 @@
+from __future__ import annotations
 import sys
 from . import Heuristic
 from ..Board import Board
 from ..Game import Game
+from .Heuristic import Heuristic
 
 
 class SimpleHeuristic(Heuristic):
+    
     def __init__(self, gameN) -> None:
         super().__init__(gameN)
         self.name = "Simple"
@@ -26,9 +29,9 @@ class SimpleHeuristic(Heuristic):
         board_state = board.getBoardState()
         winning = Game.winning(board_state, self.gameN)
         if winning == player:
-            return sys.maxint
+            return sys.maxsize
         elif winning != 0:
-            return -sys.maxint-1
+            return -sys.maxsize-1
 
         # If not winning or losing, return highest number of claimed squares in a row
 

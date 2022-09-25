@@ -1,8 +1,8 @@
-from NRow.Players import PlayerController
-import Board
+from __future__ import annotations
+from .Players.PlayerController import PlayerController
+from .Board import Board
 
-def __getPlayers(n:int) -> list(PlayerController):
-        pass
+
 
 class Game:
 
@@ -32,7 +32,7 @@ class Game:
 
     #function that determine if the game is over
     def isOver(self) -> bool:
-        self.winner = self.winning(self.gameBoard.getBoardState(), self.gameN)
+        self.winner = Game.winning(self.gameBoard.getBoardState(), self.gameN)
         return self.winner != 0
 
     #determines if a player has won, if so return his playerId
@@ -40,7 +40,7 @@ class Game:
 
         #vertical check
         for i in range(0, len(board)):
-            for j in range(0, len(board[i])):
+            for j in range(0, len(board[i]) - gameN + 1):
                 if(board[i][j] != 0):
                     player = board[i][j]
                     for x in range(1, gameN):
@@ -51,7 +51,7 @@ class Game:
                         return player
 
         #horizontal check
-        for i in range(0, len(board-gameN+1)):
+        for i in range(0, len(board)-gameN+1):
             for j in range(0, len(board[i])):
                 if board[i][j] != 0:
                     player = board[i][j]
@@ -64,7 +64,7 @@ class Game:
 
         #ascending diagonal check
         for i in range(0, len(board) - gameN + 1):
-            for j in range(len(board[i]) - 1, gameN, -1):
+            for j in range(len(board[i]) - 1, gameN - 1, -1):
                 if board[i][j] != 0:
                     player = board[i][j]
                     for x in range(1,gameN):
@@ -75,7 +75,7 @@ class Game:
                         return player
 
         #descending diagonal check
-        for i in range(0, len(board -gameN + 1)):
+        for i in range(0, len(board) - gameN + 1):
             for j in range(len(board[i])- gameN + 1):
                 if board[i][j] != 0:
                     player = board[i][j]

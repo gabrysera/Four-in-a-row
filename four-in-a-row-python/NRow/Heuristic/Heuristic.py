@@ -1,3 +1,4 @@
+from __future__ import annotations
 import sys
 from abc import ABC, abstractmethod
 from ..Board import Board
@@ -8,7 +9,11 @@ class Heuristic(ABC):
         self.gameN = gameN
         self.evalCount = 0
     
-    def get_best_action(self, player:int, board:Board) -> int:
+    def getEvalCount(self) -> int:
+        return self.evalCount
+
+
+    def getBestAction(self, player:int, board:Board) -> int:
         """Determines the best column for the next move
 
         Args:
@@ -18,14 +23,14 @@ class Heuristic(ABC):
         Returns:
             int: column integer
         """
-        utilities = self.eval_actions(player, board)
+        utilities = self.evalActions(player, board)
         best_action = 0
-        for i in range(len(utilities)):
+        for i in range(0, len(utilities)):
             best_action = i if utilities[i] > utilities[best_action] else best_action
 
         return best_action
 
-    def eval_actions(self, player:int, board:Board) -> list(int):
+    def evalActions(self, player:int, board:Board) -> list(int):
         """Helper function to determines the utility of each column
 
         Args:
@@ -35,12 +40,12 @@ class Heuristic(ABC):
         Returns:
             list(int): list of size boardWidth with utilities
         """
-        utilities = list()
-        for i in range(board.width):
-            utilities.append(self.evaluate_action(player, i, board))
+        utilities = []
+        for i in range(0, board.width):
+            utilities.append(self.evaluateAction(player, i, board))
         return utilities
 
-    def evaluate_action(self, player:int, action:int, board:Board) -> int:
+    def evaluateAction(self, player:int, action:int, board:Board) -> int:
         """Helper function to assign a utility to an action
 
         Args:
@@ -54,12 +59,12 @@ class Heuristic(ABC):
 
         if board.isValid:
             self.evalCount += 1
-            value = self.evaluate_board(player, board.getNewBoard(action, player))
+            value = self.evaluateBoard(player, board.getNewBoard(action, player))
             return value
         else:
             return -sys.maxint-1
 
-    def evaluate_board(self, player:int, board:Board) -> int:
+    def evaluateBoard(self, player:int, board:Board) -> int:
         """Helper function to assign a utility to a board
 
         Args:

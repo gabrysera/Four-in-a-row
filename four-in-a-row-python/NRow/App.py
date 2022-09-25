@@ -1,7 +1,8 @@
-from NRow.Heuristic import SimpleHeuristic
-from NRow.Players import PlayerController
-from NRow.Players import HumanPlayer
-import Game
+from __future__ import annotations
+from .Heuristic.SimpleHeuristic import SimpleHeuristic
+from .Players.PlayerController import PlayerController
+from .Players.HumanPlayer import HumanPlayer
+from .Game import Game
 
 class App:
 
@@ -14,7 +15,7 @@ class App:
         self.game.startGame()
         
 
-    def __getPlayers(gameN:int) -> list(PlayerController):
+    def __getPlayers(self, gameN:int) -> list(PlayerController):
         heuristic1 = SimpleHeuristic(gameN)
         heuristic2 = SimpleHeuristic(gameN)
 
