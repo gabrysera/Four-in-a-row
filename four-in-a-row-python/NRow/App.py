@@ -2,6 +2,7 @@ from __future__ import annotations
 from .Heuristic.SimpleHeuristic import SimpleHeuristic
 from .Players.PlayerController import PlayerController
 from .Players.HumanPlayer import HumanPlayer
+from .Players.MinMaxPlayer import minMaxPlayer
 from .Game import Game
 
 class App:
@@ -19,8 +20,8 @@ class App:
         heuristic1 = SimpleHeuristic(gameN)
         heuristic2 = SimpleHeuristic(gameN)
 
-        human = HumanPlayer(1, gameN, heuristic1)
-        human2 = HumanPlayer(2, gameN, heuristic2)
+        human = minMaxPlayer(1, gameN, 3, heuristic1)
+        human2 = minMaxPlayer(2, gameN, 3, heuristic2)
 
         players = [human, human2]
         return players

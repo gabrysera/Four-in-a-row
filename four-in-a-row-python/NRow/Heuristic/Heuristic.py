@@ -24,7 +24,6 @@ class Heuristic(ABC):
             int: column integer
         """
         utilities = self.evalActions(player, board)
-        print("utilities:",utilities)
         best_action = 0
         for i in range(0, len(utilities)):
             best_action = i if utilities[i] > utilities[best_action] else best_action
