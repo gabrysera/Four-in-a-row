@@ -3,10 +3,12 @@ from ..Tree.Tree import Tree
 from ..Board import Board
 from ..Heuristic.Heuristic import Heuristic
 
-class MinMaxTree(Tree):
+class AlphaBetaTree(Tree):
 
-    def __init__(self, board:Board, depth:int, playerId:int, heuristic:Heuristic, evaluationPlayer:int):
-        super().__init__(board, depth, playerId, heuristic, evaluationPlayer)
+    def __init__(self, board:Board, depth:int, playerId:int, heuristic:Heuristic, evaluationPlayer:int, gameN:int, alpha:int, beta:int):
+        super().__init__(board, depth, playerId, heuristic, evaluationPlayer, gameN)
+        self.alpha = alpha
+        self.beta = beta
 
     def getValueAndMove(self) -> tuple(int, int):
         children = self.getChildren()
@@ -19,13 +21,14 @@ class MinMaxTree(Tree):
             return (minValue, childrenValues.index(minValue)+1)
 
     def getChildren(self) -> list('Tree'):
+        #HERE IMPLEMENT ALPHA BETA PRUNING
         children = []
         nextPlayer = 1 if self.evaluationPlayer == 2 else 2 
+        
         for col in range(0, self.board.width):
             if self.board.isValid(col):
-                newTree = MinMaxTree(self.board.getNewBoard(col, self.evaluationPlayer), self.depth-1, self.playerId, self.heuristic, nextPlayer, self.gameN)
+                newTree = AlphaBetaTree(self.board.getNewBoard(col, self.evaluationPlayer), self.depth-1, self.playerId, self.heuristic, nextPlayer, self.gameN)
                 children.append(newTree)
-                self.value = max(self.value, children[-1].getValue())
             else:
                 children.append(None)
         return children
