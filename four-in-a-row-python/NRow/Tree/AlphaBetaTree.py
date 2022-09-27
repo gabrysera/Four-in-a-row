@@ -5,8 +5,8 @@ from ..Heuristic.Heuristic import Heuristic
 
 class MinMaxTree(Tree):
 
-    def __init__(self, board:Board, depth:int, playerId:int, heuristic:Heuristic, evaluationPlayer:int, gameN:int):
-        super().__init__(board, depth, playerId, heuristic, evaluationPlayer, gameN)
+    def __init__(self, board:Board, depth:int, playerId:int, heuristic:Heuristic, evaluationPlayer:int):
+        super().__init__(board, depth, playerId, heuristic, evaluationPlayer)
 
     def getValueAndMove(self, playerId:int, evaluationPlayer:int, children:list('Tree')) -> tuple(int, int):
         childrenValues:list(int) = self.getChildrenValues(children)

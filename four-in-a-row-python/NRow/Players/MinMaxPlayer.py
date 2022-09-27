@@ -20,13 +20,11 @@ class minMaxPlayer(PlayerController):
             int: _description_
         """
         board.printBoard()
-        tree = MinMaxTree(Board(board=board), self.depth, self.playerId, self.heuristic, self.playerId)
+        tree = MinMaxTree(Board(board=board), self.depth, self.playerId, self.heuristic, self.playerId, self.gameN)
+        column = tree.getMove()
         if Heuristic is not None:
             print("heuristic " + self.heuristic.__str__() + " calculated the best move is: "
-             + str(tree.getMove()))
-        print("Player " + self.__str__() + "\nWhich column would you like to play in?")
-        
-        column = int(input())
-        print(f"Selected Column: {column}")
+             + str(column))
+
         return column - 1
 
