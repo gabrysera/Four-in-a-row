@@ -1,4 +1,5 @@
 from __future__ import annotations
+import sys
 from abc import ABC, abstractmethod
 from ..Board import Board
 from ..Heuristic.Heuristic import Heuristic
@@ -20,9 +21,12 @@ class Tree(ABC):
         children = []
         nextPlayer = 1 if evaluationPlayer == 2 else 2 
         for col in range(0, board.width):
-            newTree = self.__class__(board.getNewBoard(col, evaluationPlayer), depth-1, playerId, heuristic, nextPlayer, gameN)
-            children.append(newTree)
-            self.value = max(self.value, children[-1].getValue())
+            if board.isValid(col):
+                newTree = self.__class__(board.getNewBoard(col, evaluationPlayer), depth-1, playerId, heuristic, nextPlayer, gameN)
+                children.append(newTree)
+                self.value = max(self.value, children[-1].getValue())
+            else:
+                children.append(None)
         return children
 
     @abstractmethod
@@ -30,7 +34,7 @@ class Tree(ABC):
         pass
 
     def getChildrenValues(self, children:list()):
-        return list(map(lambda x: x.getValue(), children))
+        return list(map(lambda x: x.getValue() if x != None else -sys.maxsize-1, children))
 
     def getValue(self):
         return self.value
