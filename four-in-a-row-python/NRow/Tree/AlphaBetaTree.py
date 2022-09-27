@@ -8,11 +8,25 @@ class MinMaxTree(Tree):
     def __init__(self, board:Board, depth:int, playerId:int, heuristic:Heuristic, evaluationPlayer:int):
         super().__init__(board, depth, playerId, heuristic, evaluationPlayer)
 
-    def getValueAndMove(self, playerId:int, evaluationPlayer:int, children:list('Tree')) -> tuple(int, int):
+    def getValueAndMove(self) -> tuple(int, int):
+        children = self.getChildren()
         childrenValues:list(int) = self.getChildrenValues(children)
-        if playerId == evaluationPlayer:
-            maxValue = max(childrenValues)
+        if self.playerId == self.evaluationPlayer:
+            maxValue = max(filter(lambda x: x is not None,childrenValues))
             return (maxValue, childrenValues.index(maxValue)+1)
         else:
-            minValue = min(childrenValues)
+            minValue = min(filter(lambda x: x is not None, childrenValues))
             return (minValue, childrenValues.index(minValue)+1)
+
+    def getChildren(self) -> list('Tree'):
+        children = []
+        nextPlayer = 1 if self.evaluationPlayer == 2 else 2 
+        for col in range(0, self.board.width):
+            if self.board.isValid(col):
+                newTree = MinMaxTree(self.board.getNewBoard(col, self.evaluationPlayer), self.depth-1, self.playerId, self.heuristic, nextPlayer, self.gameN)
+                children.append(newTree)
+                self.value = max(self.value, children[-1].getValue())
+            else:
+                children.append(None)
+        return children
+    
