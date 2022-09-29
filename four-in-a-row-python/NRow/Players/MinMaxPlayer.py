@@ -4,7 +4,7 @@ from ..Heuristic import Heuristic
 from .PlayerController import PlayerController
 from ..Tree.MinMaxTree import MinMaxTree
 
-class minMaxPlayer(PlayerController):
+class MinMaxPlayer(PlayerController):
 
     def __init__(self, playerId:int, gameN:int, depth:int, heuristic:Heuristic):
         super().__init__(playerId, gameN, heuristic)

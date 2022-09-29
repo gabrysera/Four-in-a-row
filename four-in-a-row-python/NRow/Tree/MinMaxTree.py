@@ -2,7 +2,7 @@ from __future__ import annotations
 from ..Tree.Tree import Tree
 from ..Board import Board
 from ..Heuristic.Heuristic import Heuristic
-
+import sys
 class MinMaxTree(Tree):
 
     def __init__(self, board:Board, depth:int, playerId:int, heuristic:Heuristic, evaluationPlayer:int, gameN:int):
@@ -11,10 +11,10 @@ class MinMaxTree(Tree):
     def getValueAndMove(self) -> tuple(int, int):
         childrenValues:list(int) = self.getChildrenValues(self.getChildren())
         if self.playerId == self.evaluationPlayer:
-            maxValue = max(filter(lambda x: x is not None,childrenValues))
+            maxValue = max(map(lambda x: -sys.maxsize-1 if x is None else x, childrenValues))
             return (maxValue, childrenValues.index(maxValue)+1)
         else:
-            minValue = min(filter(lambda x: x is not None, childrenValues))
+            minValue = min(map(lambda x: sys.maxsize if x is None else x, childrenValues))
             return (minValue, childrenValues.index(minValue)+1)
 
     def getChildren(self) -> list('Tree'):

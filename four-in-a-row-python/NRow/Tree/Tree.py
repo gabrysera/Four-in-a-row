@@ -41,4 +41,3 @@ class Tree(ABC):
 
     def someoneWon(self, board:Board, gameN:int) -> bool:
         return Game.winning(board.getBoardState(), gameN) != 0
-        pass

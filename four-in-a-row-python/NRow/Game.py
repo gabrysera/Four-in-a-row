@@ -1,7 +1,7 @@
 from __future__ import annotations
 from .Players.PlayerController import PlayerController
 from .Board import Board
-
+import time
 
 
 class Game:
@@ -23,7 +23,7 @@ class Game:
                 currentPlayer = 1 if currentPlayer == 0 else 0
             else:
                 print("Illegal move!!")
-
+                time.sleep(5)
         self.gameBoard.printBoard()
         if self.winner < 0:
             print("game is a draw")
