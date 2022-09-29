@@ -10,6 +10,7 @@ class MinMaxTree(Tree):
 
     def getValueAndMove(self) -> tuple(int, int):
         childrenValues:list(int) = self.getChildrenValues(self.getChildren())
+        print(childrenValues)
         if self.playerId == self.evaluationPlayer:
             maxValue = max(map(lambda x: -sys.maxsize-1 if x is None else x, childrenValues))
             return (maxValue, childrenValues.index(maxValue)+1)
