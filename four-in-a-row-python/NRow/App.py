@@ -12,12 +12,12 @@ class App:
         self.game_n = 4
         self.board_width = 7
         self.board_height = 6
-        self.players = self.__getPlayers(self.game_n)
+        self.players = self.__get_players(self.game_n)
         self.game= Game(self.game_n, self.board_width, self.board_height, self.players)
         self.game.startGame()
         
 
-    def __getPlayers(self, game_n:int) -> list(PlayerController):
+    def __get_players(self, game_n:int) -> list(PlayerController):
         """Determine the players for the game
 
         Args:
