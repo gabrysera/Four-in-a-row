@@ -7,23 +7,23 @@ from ..Heuristic.Heuristic import Heuristic
 class PlayerController(ABC):
     
     #constructor
-    def __init__(self, playerId:int, gameN:int, heuristic:Heuristic):
-        self.playerId = playerId
-        self.gameN = gameN
+    def __init__(self, player_id:int, game_n:int, heuristic:Heuristic):
+        self.player_id = player_id
+        self.game_n = game_n
         self.heuristic = heuristic
 
     #how many time the heuristic was used to evaluate a boardstate
-    def getEvalCount(self):
-        return self.heuristic.getEvalCount()
+    def get_eval_count(self):
+        return self.heuristic.get_eval_count()
 
     #string representation of player for board
     def __str__(self):
-        if self.playerId == 2:
+        if self.player_id == 2:
             return "O"
         else:
             return "X"
 
     #abstract method for player classes
     @abstractmethod
-    def makeMove(self, board:Board) -> int:
+    def make_move(self, board:Board) -> int:
         pass

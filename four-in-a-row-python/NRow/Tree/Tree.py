@@ -1,5 +1,4 @@
 from __future__ import annotations
-import sys
 from abc import ABC, abstractmethod
 from ..Board import Board
 from ..Heuristic.Heuristic import Heuristic
@@ -7,37 +6,42 @@ from ..Game import Game
 
 class Tree(ABC):
 
-    def __init__(self, board:Board, depth:int, playerId:int, heuristic:Heuristic, evaluationPlayer:int, gameN:int):
+    def __init__(self, board:Board, depth:int, player_id:int, heuristic:Heuristic, evaluation_player:int, game_n:int):
         self.value = 0
         self.board = board
         self.depth = depth
-        self.playerId = playerId
+        self.player_id = player_id
         self.heuristic = heuristic
-        self.evaluationPlayer = evaluationPlayer
-        self.gameN = gameN
+        self.evaluation_player = evaluation_player
+        self.game_n = game_n
 
-        if depth != 0 and not self.someoneWon(board, gameN):
-            self.value, self.move = self.getValueAndMove()
+        if depth != 0 and not self.someone_won(board, game_n):
+            self.value, self.move = self.get_value_and_move()
         else:
-            self.value = heuristic.evaluateBoard(playerId, board)
+            self.value = heuristic.evaluate_board(player_id, board)
             self.move = -1
 
-    @abstractmethod
-    def getValueAndMove(self, playerId:int, evaluationPlayer:int, children:list('Tree')) -> tuple(int, int):
-        pass
+    def get_value_and_move(self) -> tuple(int, int):
+        children_values:list(int) = self.get_children_values(self.get_children())
+        if self.player_id == self.evaluation_player:
+            maxValue = max(children_values, key=lambda x: x[0])
+            return maxValue
+        else:
+            minValue = min(children_values, key=lambda x: x[0])
+            return minValue
     
     @abstractmethod
-    def getChildren(self, board:Board, depth:int, playerId:int, heuristic:Heuristic, evaluationPlayer:int, gameN:int) -> list('Tree'):
+    def get_children(self, board:Board, depth:int, player_id:int, heuristic:Heuristic, evaluation_player:int, game_n:int) -> list('Tree'):
         pass
 
-    def getChildrenValues(self, children:list()):
-        return list(map(lambda x: x.getValue() if x != None else None, children))
+    def get_children_values(self, children:list()):
+        return list(map(lambda x: (x[0].get_value(), x[1]), children))
 
-    def getValue(self):
+    def get_value(self):
         return self.value
 
-    def getMove(self):
-        return self.move
+    def get_move(self):
+        return self.move + 1
 
-    def someoneWon(self, board:Board, gameN:int) -> bool:
-        return Game.winning(board.getBoardState(), gameN) != 0
+    def someone_won(self, board:Board, game_n:int) -> bool:
+        return Game.winning(board.get_board_state(), game_n) != 0

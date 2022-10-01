@@ -2,29 +2,17 @@ from __future__ import annotations
 from ..Tree.Tree import Tree
 from ..Board import Board
 from ..Heuristic.Heuristic import Heuristic
-import sys
+
 class MinMaxTree(Tree):
 
-    def __init__(self, board:Board, depth:int, playerId:int, heuristic:Heuristic, evaluationPlayer:int, gameN:int):
-        super().__init__(board, depth, playerId, heuristic, evaluationPlayer, gameN)
+    def __init__(self, board:Board, depth:int, player_id:int, heuristic:Heuristic, evaluation_player:int, game_n:int):
+        super().__init__(board, depth, player_id, heuristic, evaluation_player, game_n)
 
-    def getValueAndMove(self) -> tuple(int, int):
-        childrenValues:list(int) = self.getChildrenValues(self.getChildren())
-        print(childrenValues)
-        if self.playerId == self.evaluationPlayer:
-            maxValue = max(map(lambda x: -sys.maxsize-1 if x is None else x, childrenValues))
-            return (maxValue, childrenValues.index(maxValue)+1)
-        else:
-            minValue = min(map(lambda x: sys.maxsize if x is None else x, childrenValues))
-            return (minValue, childrenValues.index(minValue)+1)
-
-    def getChildren(self) -> list('Tree'):
+    def get_children(self) -> list(tuple('Tree', int)):
         children = []
-        nextPlayer = 1 if self.evaluationPlayer == 2 else 2 
+        next_player = 1 if self.evaluation_player == 2 else 2 
         for col in range(0, self.board.width):
-            if self.board.isValid(col):
-                newTree = MinMaxTree(self.board.getNewBoard(col, self.evaluationPlayer), self.depth-1, self.playerId, self.heuristic, nextPlayer, self.gameN)
-                children.append(newTree)
-            else:
-                children.append(None)
+            if self.board.is_valid(col):
+                newTree = MinMaxTree(self.board.get_new_board(col, self.evaluation_player), self.depth-1, self.player_id, self.heuristic, next_player, self.game_n)
+                children.append((newTree, col))
         return children

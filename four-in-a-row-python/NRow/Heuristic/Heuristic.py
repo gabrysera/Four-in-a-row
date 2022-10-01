@@ -9,11 +9,11 @@ class Heuristic(ABC):
         self.gameN = gameN
         self.evalCount = 0
     
-    def getEvalCount(self) -> int:
+    def get_eval_count(self) -> int:
         return self.evalCount
 
 
-    def getBestAction(self, player:int, board:Board) -> int:
+    def get_best_action(self, player:int, board:Board) -> int:
         """Determines the best column for the next move
 
         Args:
@@ -23,14 +23,14 @@ class Heuristic(ABC):
         Returns:
             int: column integer
         """
-        utilities = self.evalActions(player, board)
+        utilities = self.eval_actions(player, board)
         best_action = 0
         for i in range(0, len(utilities)):
             best_action = i if utilities[i] > utilities[best_action] else best_action
 
         return best_action
 
-    def evalActions(self, player:int, board:Board) -> list(int):
+    def eval_actions(self, player:int, board:Board) -> list(int):
         """Helper function to determines the utility of each column
 
         Args:
@@ -42,10 +42,10 @@ class Heuristic(ABC):
         """
         utilities = []
         for i in range(0, board.width):
-            utilities.append(self.evaluateAction(player, i, Board(board=board)))
+            utilities.append(self.evaluate_action(player, i, Board(board=board)))
         return utilities
 
-    def evaluateAction(self, player:int, action:int, board:Board) -> int:
+    def evaluate_action(self, player:int, action:int, board:Board) -> int:
         """Helper function to assign a utility to an action
 
         Args:
@@ -57,14 +57,14 @@ class Heuristic(ABC):
             int: the utility, negative 'infinity' if the move is invalid
         """
 
-        if board.isValid:
+        if board.is_valid:
             self.evalCount += 1
-            value = self.evaluateBoard(player, board.getNewBoard(action, player))
+            value = self.evaluate_board(player, board.get_new_board(action, player))
             return value
         else:
             return -sys.maxint-1
 
-    def evaluateBoard(self, player:int, board:Board) -> int:
+    def evaluate_board(self, player:int, board:Board) -> int:
         """Helper function to assign a utility to a board
 
         Args:

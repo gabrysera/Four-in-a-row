@@ -7,14 +7,14 @@ from ..Tree.AlphaBetaTree import AlphaBetaTree
 
 class AlphaBetaPlayer(PlayerController):
 
-    def __init__(self, playerId:int, gameN:int, depth:int, heuristic:Heuristic):
-        super().__init__(playerId, gameN, heuristic)
+    def __init__(self, player_id:int, game_n:int, depth:int, heuristic:Heuristic):
+        super().__init__(player_id, game_n, heuristic)
         self.depth = depth
 
-    def makeMove(self, board:Board) -> int:
-        board.printBoard()
-        tree = AlphaBetaTree(Board(board=board), self.depth, self.playerId, self.heuristic, self.playerId, self.gameN, -sys.maxsize-1, sys.maxsize)
-        column = tree.getMove()
+    def make_move(self, board:Board) -> int:
+        board.print_board()
+        tree = AlphaBetaTree(Board(board=board), self.depth, self.player_id, self.heuristic, self.player_id, self.game_n, -sys.maxsize-1, sys.maxsize)
+        column = tree.get_move()
         if Heuristic is not None:
             print("heuristic " + self.heuristic.__str__() + " calculated the best move is: "
              + str(column))

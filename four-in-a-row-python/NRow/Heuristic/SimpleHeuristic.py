@@ -26,7 +26,7 @@ class SimpleHeuristic(Heuristic):
             int: the utility
         """
 
-        board_state = board.getBoardState()
+        board_state = board.get_board_state()
         winning = Game.winning(board_state, self.gameN)
         if winning == player:
             return sys.maxsize

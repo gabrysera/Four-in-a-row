@@ -9,20 +9,20 @@ from .Game import Game
 class App:
 
     def __init__(self):
-        self.gameN = 4
-        self.boardWidth = 7
-        self.boardHeight = 6
-        self.players = self.__getPlayers(self.gameN)
-        self.game= Game(self.gameN, self.boardWidth, self.boardHeight, self.players)
+        self.game_n = 4
+        self.board_width = 7
+        self.board_height = 6
+        self.players = self.__getPlayers(self.game_n)
+        self.game= Game(self.game_n, self.board_width, self.board_height, self.players)
         self.game.startGame()
         
 
-    def __getPlayers(self, gameN:int) -> list(PlayerController):
-        heuristic1 = SimpleHeuristic(gameN)
-        heuristic2 = SimpleHeuristic(gameN)
+    def __getPlayers(self, game_n:int) -> list(PlayerController):
+        heuristic1 = SimpleHeuristic(game_n)
+        heuristic2 = SimpleHeuristic(game_n)
 
-        human = MinMaxPlayer(1, gameN, 5, heuristic1)
-        human2 = HumanPlayer(2, gameN, heuristic2)
+        human = MinMaxPlayer(1, game_n, 3, heuristic1)
+        human2 = HumanPlayer(2, game_n, heuristic2)
 
         players = [human, human2]
         return players
