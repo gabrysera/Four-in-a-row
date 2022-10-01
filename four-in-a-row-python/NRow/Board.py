@@ -17,37 +17,75 @@ class Board:
         self.height = height
         self.board_state = board_state
 
-    #get value in a certain coordinate
     def get_value(self, x:int, y:int) -> int:
+        """Gets the value of certain coordinate in the board
+
+        Args:
+            x (int): x-coordinate
+            y (int): y-coordinate
+
+        Returns:
+            int: coordinate's value
+        """
         return self.board_state[x][y]
 
-    #get a copy of the state
     def get_board_state(self) -> list(list(int)):
+        """
+        Returns:
+            list(list(int)): cloned list of the board state
+        """
         return [row.copy() for row in self.board_state]
 
     #player ID make a move in column x
-    def play(self, x:int, playerId:int) -> bool:
+    def play(self, x:int, player_id:int) -> bool:
+        """Let player player_id make move in column x
+
+        Args:
+            x (int): column
+            player_id (int): player to make move
+
+        Returns:
+            bool: true if succeeded
+        """
         for i in range(len(self.board_state[0])-1, -1, -1): #check column starting from the bottom
             if self.board_state[x][i] == 0:
-                self.board_state[x][i] = playerId
+                self.board_state[x][i] = player_id
                 return True
         return False
 
     #check if a move is valid
     def is_valid(self, x:int) -> bool:
+        """Returns if a move is valid or not
+
+        Args:
+            x (int): column of the action
+
+        Returns:
+            bool: true if spot is not taken yet
+        """
         return self.board_state[x][0] == 0
 
     #Gets a new board given a player and their action (WHY DO WE NEED THIS?)
-    def get_new_board(self, col:int, playerId:int) -> Board:
+    def get_new_board(self, col:int, player_id:int) -> Board:
+        """Gets a new board given a player and their action
+
+        Args:
+            col (int): column of the action
+            playerId (int): player that takes the action
+
+        Returns:
+            Board: a *new* Board object with the resulting state
+        """
         new_board_state = self.get_board_state()
         for i in range(len(new_board_state[0])-1, -1, -1): #check column starting from the bottom
             if new_board_state[col][i] == 0:
-                new_board_state[col][i] = playerId
+                new_board_state[col][i] = player_id
                 return Board(board_state = new_board_state) #maybe put a break instead of double return
         return Board(board_state = new_board_state)
 
-    #print board
     def print_board(self):
+        """Draw a human readable representation of the board
+        """
         divider = " "
         divider2 = " "
         number_row = "|"
