@@ -22,20 +22,25 @@ class Tree(ABC):
             self.move = -1
 
     def get_value_and_move(self) -> tuple(int, int):
-        children_values:list(int) = self.get_children_values(self.get_children())
+        """Returns the best move and its value
+
+        Returns:
+            tuple(int, int): the best value obtainable and the move that has that evaluation
+        """
+        children_values:list(tuple(int, int)) = self.get_children_values(self.get_children())
         if self.player_id == self.evaluation_player:
-            maxValue = max(children_values, key=lambda x: x[0])
-            return maxValue
+            max_value = max(children_values, key=lambda x: x[0]) # wouldn't python already sort based on the first elem of the tuple? (--->int<---, int)
+            return max_value
         else:
-            minValue = min(children_values, key=lambda x: x[0])
-            return minValue
+            min_value = min(children_values, key=lambda x: x[0])
+            return min_value
     
     @abstractmethod
     def get_children(self, board:Board, depth:int, player_id:int, heuristic:Heuristic, evaluation_player:int, game_n:int) -> list('Tree'):
         pass
 
-    def get_children_values(self, children:list()):
-        return list(map(lambda x: (x[0].get_value(), x[1]), children))
+    def get_children_values(self, children:list()) -> list(tuple(int, int)):
+        return list(map(lambda child: (child[0].get_value(), child[1]), children))
 
     def get_value(self):
         return self.value
