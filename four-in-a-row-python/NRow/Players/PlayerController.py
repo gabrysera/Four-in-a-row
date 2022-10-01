@@ -26,4 +26,12 @@ class PlayerController(ABC):
     #abstract method for player classes
     @abstractmethod
     def make_move(self, board:Board) -> int:
+        """Determine the place where a piece will be placed on the board
+
+        Args:
+            board (Board): the board that the move will be made in
+
+        Returns:
+            int: the column where the piece will be placed
+        """
         pass
