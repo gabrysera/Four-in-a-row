@@ -18,6 +18,14 @@ class App:
         
 
     def __getPlayers(self, game_n:int) -> list(PlayerController):
+        """Determine the players for the game
+
+        Args:
+            game_n (int):
+
+        Returns:
+            list(PlayerController): a list of size 2 with two PlayerControllers
+        """
         heuristic1 = SimpleHeuristic(game_n)
         heuristic2 = SimpleHeuristic(game_n)
 
