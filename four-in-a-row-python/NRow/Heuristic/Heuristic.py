@@ -5,8 +5,8 @@ from ..Board import Board
 
 class Heuristic(ABC):
 
-    def __init__(self, gameN) -> None:
-        self.gameN = gameN
+    def __init__(self, game_n) -> None:
+        self.game_n = game_n
         self.evalCount = 0
     
     def get_eval_count(self) -> int:

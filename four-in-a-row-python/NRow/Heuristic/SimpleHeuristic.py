@@ -8,8 +8,8 @@ from .Heuristic import Heuristic
 
 class SimpleHeuristic(Heuristic):
     
-    def __init__(self, gameN) -> None:
-        super().__init__(gameN)
+    def __init__(self, game_n) -> None:
+        super().__init__(game_n)
         self.name = "Simple"
 
     def __str__(self) -> str:
@@ -27,7 +27,7 @@ class SimpleHeuristic(Heuristic):
         """
 
         board_state = board.get_board_state()
-        winning = Game.winning(board_state, self.gameN)
+        winning = Game.winning(board_state, self.game_n)
         if winning == player:
             return sys.maxsize
         elif winning != 0:
