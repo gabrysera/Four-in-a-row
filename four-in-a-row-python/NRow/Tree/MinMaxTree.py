@@ -12,7 +12,7 @@ class MinMaxTree(Tree):
         """Gets the possible game states that can be transitioned to from the current state
 
         Returns:
-            _type_: the list of game states
+            list(tuple('Tree', int)): the list of game states along with the move that transitions to them
         """
         children = []
         next_player = 1 if self.evaluation_player == 2 else 2 
