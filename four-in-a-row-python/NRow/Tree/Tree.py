@@ -36,7 +36,7 @@ class Tree(ABC):
             return min_value
     
     @abstractmethod
-    def get_children(self, board:Board, depth:int, player_id:int, heuristic:Heuristic, evaluation_player:int, game_n:int) -> list('Tree'):
+    def get_children(self, board:Board, depth:int, player_id:int, heuristic:Heuristic, evaluation_player:int, game_n:int) -> list(tuple('Tree', int)):
         pass
 
     def get_children_values(self, children:list()) -> list(tuple(int, int)):
