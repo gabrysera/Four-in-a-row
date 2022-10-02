@@ -11,6 +11,14 @@ class MinMaxPlayer(PlayerController):
         self.depth = depth
 
     def make_move(self, board:Board) -> int:
+        """Use the MinMax algorithm to fill the game tree and select the best move according to the heuristic
+
+        Args:
+            board (Board): the board where the move will be played
+
+        Returns:
+            int: the columm where the piece will be placed
+        """
         board.print_board()
         tree = MinMaxTree(Board(board=board), self.depth, self.player_id, self.heuristic, self.player_id, self.game_n)
         column = tree.get_move()

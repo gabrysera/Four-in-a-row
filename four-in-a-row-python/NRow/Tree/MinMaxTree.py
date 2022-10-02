@@ -9,10 +9,15 @@ class MinMaxTree(Tree):
         super().__init__(board, depth, player_id, heuristic, evaluation_player, game_n)
 
     def get_children(self) -> list(tuple('Tree', int)):
+        """Gets the possible game states that can be transitioned to from the current state
+
+        Returns:
+            _type_: the list of game states
+        """
         children = []
         next_player = 1 if self.evaluation_player == 2 else 2 
         for col in range(0, self.board.width):
             if self.board.is_valid(col):
-                newTree = MinMaxTree(self.board.get_new_board(col, self.evaluation_player), self.depth-1, self.player_id, self.heuristic, next_player, self.game_n)
-                children.append((newTree, col))
+                new_tree = MinMaxTree(self.board.get_new_board(col, self.evaluation_player), self.depth-1, self.player_id, self.heuristic, next_player, self.game_n)
+                children.append((new_tree, col))
         return children
