@@ -14,7 +14,7 @@ class App:
         self.board_height = 6
         self.players = self.__get_players(self.game_n)
         self.game= Game(self.game_n, self.board_width, self.board_height, self.players)
-        self.game.startGame()
+        self.game.start_game()
         
 
     def __get_players(self, game_n:int) -> list(PlayerController):
