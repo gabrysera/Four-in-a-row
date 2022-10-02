@@ -22,7 +22,7 @@ class Tree(ABC):
             self.move = -1
 
     def get_value_and_move(self) -> tuple(int, int):
-        """Returns the best move and its value
+        """Returns the best move and its value according to player player_id's goal (maximize/minimize)
 
         Returns:
             tuple(int, int): the best value obtainable and the move that has that evaluation
@@ -42,10 +42,10 @@ class Tree(ABC):
     def get_children_values(self, children:list()) -> list(tuple(int, int)):
         return list(map(lambda child: (child[0].get_value(), child[1]), children))
 
-    def get_value(self):
+    def get_value(self) -> int:
         return self.value
 
-    def get_move(self):
+    def get_move(self) -> int:
         return self.move + 1
 
     def someone_won(self, board:Board, game_n:int) -> bool:
