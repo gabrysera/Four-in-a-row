@@ -4,6 +4,7 @@ from .Players.PlayerController import PlayerController
 from .Players.HumanPlayer import HumanPlayer
 from .Players.MinMaxPlayer import MinMaxPlayer
 from .Players.AlphaBetaPlayer import AlphaBetaPlayer
+from .Heuristic.AdvancedHeuristic import Heuristic
 from .Game import Game
 
 class App:
