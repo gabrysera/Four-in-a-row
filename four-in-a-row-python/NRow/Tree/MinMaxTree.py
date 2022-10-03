@@ -8,7 +8,7 @@ class MinMaxTree(Tree):
     def __init__(self, board:Board, depth:int, player_id:int, heuristic:Heuristic, evaluation_player:int, game_n:int):
         super().__init__(board, depth, player_id, heuristic, evaluation_player, game_n)
 
-    def get_children(self) -> list(tuple('Tree', int)):
+    def get_children(self) -> list[tuple['Tree', int]]:
         """Gets the possible game states that can be transitioned to from the current state
 
         Returns:

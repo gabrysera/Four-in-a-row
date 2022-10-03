@@ -11,7 +11,7 @@ class AlphaBetaTree(Tree):
         self.beta = beta
         super().__init__(board, depth, player_id, heuristic, evaluation_player, game_n)
         
-    def get_children(self) -> list(tuple('Tree', int)):
+    def get_children(self) -> list[tuple['Tree', int]]:
         """Gets the possible game states that can be transitioned to from the current state
 
         Returns:
@@ -23,7 +23,7 @@ class AlphaBetaTree(Tree):
         else:
             return self.min_player_pruning(next_player)
 
-    def max_player_pruning(self, next_player:int) -> list(tuple('Tree', int)):
+    def max_player_pruning(self, next_player:int) -> list[tuple['Tree', int]]:
         """Get children trees while updating the value of Alpha to decide whether to prune branches or not
 
         Args:
@@ -46,7 +46,7 @@ class AlphaBetaTree(Tree):
                     break
         return children
 
-    def min_player_pruning(self, next_player:int) -> list(tuple('Tree', int)):
+    def min_player_pruning(self, next_player:int) -> list[tuple['Tree', int]]:
         """Get children trees while updating the value of Beta to decide whether to prune branches or not
 
         Args:

@@ -21,7 +21,7 @@ class Tree(ABC):
             self.value = heuristic.evaluate_board(player_id, board)
             self.move = -1
 
-    def get_value_and_move(self) -> tuple(int, int):
+    def get_value_and_move(self) -> tuple[int, int]:
         """Returns the best move and its value according to player player_id's goal (maximize/minimize)
 
         Returns:
@@ -36,10 +36,10 @@ class Tree(ABC):
             return min_value
     
     @abstractmethod
-    def get_children(self, board:Board, depth:int, player_id:int, heuristic:Heuristic, evaluation_player:int, game_n:int) -> list(tuple('Tree', int)):
+    def get_children(self, board:Board, depth:int, player_id:int, heuristic:Heuristic, evaluation_player:int, game_n:int) -> list[tuple['Tree', int]]:
         pass
 
-    def get_children_values(self, children:list()) -> list(tuple(int, int)):
+    def get_children_values(self, children:list()) -> list[tuple[int, int]]:
         return list(map(lambda child: (child[0].get_value(), child[1]), children))
 
     def get_value(self) -> int:
