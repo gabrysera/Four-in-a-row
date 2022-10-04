@@ -4,7 +4,7 @@ from .Players.PlayerController import PlayerController
 from .Players.HumanPlayer import HumanPlayer
 from .Players.MinMaxPlayer import MinMaxPlayer
 from .Players.AlphaBetaPlayer import AlphaBetaPlayer
-from .Heuristic.AdvancedHeuristic import Heuristic
+from .Heuristic.AdvancedHeuristic import AdvancedHeuristic, Heuristic
 from .Game import Game
 
 class App:
@@ -27,7 +27,7 @@ class App:
         Returns:
             list(PlayerController): a list of size 2 with two PlayerControllers
         """
-        heuristic1 = SimpleHeuristic(game_n)
+        heuristic1 = AdvancedHeuristic(game_n)
         heuristic2 = SimpleHeuristic(game_n)
 
         human = MinMaxPlayer(1, game_n, 3, heuristic1)
