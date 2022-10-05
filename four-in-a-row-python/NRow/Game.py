@@ -24,7 +24,7 @@ class Game:
             else:
                 print("Illegal move!!")
                 time.sleep(5)
-        self.game_board.print_board()
+        #self.game_board.print_board()
         if self.winner < 0:
             print("game is a draw")
         else:
@@ -32,6 +32,7 @@ class Game:
         print(f"Player {self.players[0].__str__()} evaluated the board {self.players[0].get_eval_count()} times")
         print(f"Player {self.players[1].__str__()} evaluated the board {self.players[1].get_eval_count()} times")
 
+        return self.players[0].get_eval_count() + self.players[1].get_eval_count()
     #function that determine if the game is over
     def is_over(self) -> bool:
         self.winner = Game.winning(self.game_board.get_board_state(), self.game_n)

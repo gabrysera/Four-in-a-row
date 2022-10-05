@@ -7,11 +7,11 @@ from .Heuristic import Heuristic
 
 class AdvancedHeuristic(Heuristic):
 
-    def __init__(self, game_n) -> None:
+    def __init__(self, game_n, board_width:int, board_heigth:int) -> None:
         super().__init__(game_n)
         self.name = "Advanced"
-        self.scalar = int(len(self.board_state)/2) 
-        self.board_values = self.compute_board_heuristic()
+        self.scalar = int(board_width/2) 
+        self.board_values = self.compute_board_heuristic(board_width, board_heigth)
 
     def __str__(self) -> str:
         return super().__str__() + self.name
@@ -27,7 +27,7 @@ class AdvancedHeuristic(Heuristic):
             int: the utility
         """
         board_state = board.get_board_state()
-        self.board_state = board_state
+        board_width = board_state
         winning = Game.winning(board_state, self.game_n)
         if winning == player:
             return sys.maxsize
@@ -41,48 +41,45 @@ class AdvancedHeuristic(Heuristic):
         for i in range(0, len(board_state)):
             for j in range(0, len(board_state[i])):
                 if board_state[i][j] == player:
-                    max_in_row = max(max_in_row, self.scalar + self.board_values[i][j])
+                    max_in_row = max(max_in_row, self.board_values[i][j])
                     for x in range(1, len(board_state) - i):
                         if board_state[i + x][j] == player:
-                            max_in_row = max(max_in_row, self.scalar * (x + 1) + self.board_values[i+x][j])
+                            max_in_row = max(max_in_row, (x + 1) * self.board_values[i+x][j])
                         else:
                             break
                     for y in range(1, len(board_state[0]) - j):
                         if board_state[i][j + y] == player:
-                            max_in_row = max(max_in_row, self.scalar * (y + 1) + self.board_values[i][j+y])
+                            max_in_row = max(max_in_row, (y + 1) * self.board_values[i][j+y])
                         else:
                             break
                     for d in range(1, min(len(board_state) - i, len(board_state[0]) - j)):
                         if board_state[i + d][j + d] == player:
-                            max_in_row = max(max_in_row, self.scalar * (d + 1) + self.board_values[i+d][j+d])
+                            max_in_row = max(max_in_row, (d + 1) *  self.board_values[i+d][j+d])
                         else:
                             break
                     for a in range(1, min(len(board_state) - i, j)):
                         if board_state[i + a][j - a] == player:
-                            max_in_row = max(max_in_row, self.scalar * (a + 1) + self.board_values[i+a][j-a])
+                            max_in_row = max(max_in_row, (a + 1) *  self.board_values[i+a][j-a])
                         else:
                             break
         return max_in_row
 
-    def compute_board_heuristic(self) -> list(list(int)):
+    def compute_board_heuristic(self, board_width:int, board_heigth:int) -> list(list(int)):
         
-        if len(self.board_state) % 2 == 0:
-            i_values = [x for x in range(int(len(self.board_state)/2))]
-            i_values = list(map(lambda x: x*self.scalar, i_values + i_values.copy()[::-1]))
-        else:
-            i_values = [x for x in range(int(len(self.board_state)/2))]
-            i_values = list(map(lambda x: x*self.scalar, i_values + [i_values[-1]] + i_values.copy()[::-1]))
+        
+        i_values = [x for x in range(int(board_width/2))]
+        i_values = i_values + [i_values[-1]] + i_values.copy()[::-1]
 
-        if len(self.board_state[0]) % 2 == 0:
-            j_values = [x for x in range(int(len(self.board_state[0])/2))]
-            j_values = list(map(lambda x: x*self.scalar, j_values + j_values.copy()[::-1]))
+        if board_heigth % 2 == 0:
+            j_values = [x for x in range(int(board_heigth/2))]
+            j_values =j_values + j_values.copy()[::-1]
         else:
-            j_values = [x for x in range(int(len(self.board_state[0])/2))]
-            j_values = list(map(lambda x: x*self.scalar, j_values + [j_values[-1]] + j_values.copy()[::-1]))
+            j_values = [x for x in range(int(board_heigth/2))]
+            j_values = j_values + [j_values[-1]] + j_values.copy()[::-1]
 
         board_values = []
-        for i in range(0,len(self.board_state)):
+        for i in range(0,board_width):
             board_values.append([])
-            for j in range(0,int(len(self.board_state[0]))):
+            for j in range(0,int(board_heigth)):
                 board_values[i].append((i_values[i] + j_values[j]))
         return board_values
