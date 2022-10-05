@@ -10,6 +10,8 @@ class AdvancedHeuristic(Heuristic):
     def __init__(self, game_n) -> None:
         super().__init__(game_n)
         self.name = "Advanced"
+        self.scalar = int(len(self.board_state)/2) 
+        self.board_values = self.compute_board_heuristic()
 
     def __str__(self) -> str:
         return super().__str__() + self.name
@@ -25,68 +27,62 @@ class AdvancedHeuristic(Heuristic):
             int: the utility
         """
         board_state = board.get_board_state()
+        self.board_state = board_state
         winning = Game.winning(board_state, self.game_n)
         if winning == player:
             return sys.maxsize
         elif winning != 0:
             return -sys.maxsize-1
         
+
+        
         max_in_row = 0
-        opponent_player = 1 if player == 2 else 2
+        self.opponent_player = 1 if player == 2 else 2
         for i in range(0, len(board_state)):
             for j in range(0, len(board_state[i])):
                 if board_state[i][j] == player:
-                    max_in_row =  max(max_in_row, 1)
+                    max_in_row = max(max_in_row, self.scalar + self.board_values[i][j])
                     for x in range(1, len(board_state) - i):
                         if board_state[i + x][j] == player:
-                            max_in_row = max(max_in_row, x + 1)
+                            max_in_row = max(max_in_row, self.scalar * (x + 1) + self.board_values[i+x][j])
                         else:
                             break
                     for y in range(1, len(board_state[0]) - j):
-                        if board_state[i][j + y] == player and board_state[i][j-1] != opponent_player:
-                            max_in_row = max(max_in_row, y + 1)
+                        if board_state[i][j + y] == player:
+                            max_in_row = max(max_in_row, self.scalar * (y + 1) + self.board_values[i][j+y])
                         else:
                             break
                     for d in range(1, min(len(board_state) - i, len(board_state[0]) - j)):
                         if board_state[i + d][j + d] == player:
-                            max_in_row = max(max_in_row, d + 1)
+                            max_in_row = max(max_in_row, self.scalar * (d + 1) + self.board_values[i+d][j+d])
                         else:
                             break
                     for a in range(1, min(len(board_state) - i, j)):
                         if board_state[i + a][j - a] == player:
-                            max_in_row = max(max_in_row, a + 1)
+                            max_in_row = max(max_in_row, self.scalar * (a + 1) + self.board_values[i+a][j-a])
                         else:
                             break
         return max_in_row
 
-
-    def horizontal_not_blocked(self, board_state:list(list(int)), col:int, row:int, number_of_squares:int, opponent_player:int) -> bool:
-        return (
-            number_of_squares == self.game_n or 
-            not(
-                (col-1 < 0 or board_state[col - 1][row] == opponent_player) and 
-                (col + number_of_squares + 1 >= len(board_state) or board_state[col+number_of_squares+1][row] == opponent_player)
-            )
-        )
-
-    def vertical_not_blocked(self, board_state:list(list(int)), col:int, row:int, number_of_squares:int, opponent_player:int) -> bool:
-        print(row + number_of_squares)
-        return (
-            number_of_squares == self.game_n or
-            not(
-                row + number_of_squares  >= len(board_state[0] or board_state[col][row - 1] == opponent_player)
-            )
-        )
+    def compute_board_heuristic(self) -> list(list(int)):
         
-    def ascending_diagonal_not_blocked(self, board_state:list(list(int)), col:int, row:int, number_of_squares:int, opponent_player:int) -> bool:
-        return (
-            number_of_squares == self.game_n or
-            not(
-                (row + number_of_squares + 1 >= len(board_state[0]) or col + number_of_squares + 1 >= len(board_state) or board_state[col+number_of_squares + 1][row + number_of_squares + 1] == opponent_player) and
-                (col-1 < 0 or row - 1 < 0 or board_state[col - 1][row - 1] == opponent_player)
+        if len(self.board_state) % 2 == 0:
+            i_values = [x for x in range(int(len(self.board_state)/2))]
+            i_values = list(map(lambda x: x*self.scalar, i_values + i_values.copy()[::-1]))
+        else:
+            i_values = [x for x in range(int(len(self.board_state)/2))]
+            i_values = list(map(lambda x: x*self.scalar, i_values + [i_values[-1]] + i_values.copy()[::-1]))
 
-            )
-        )
+        if len(self.board_state[0]) % 2 == 0:
+            j_values = [x for x in range(int(len(self.board_state[0])/2))]
+            j_values = list(map(lambda x: x*self.scalar, j_values + j_values.copy()[::-1]))
+        else:
+            j_values = [x for x in range(int(len(self.board_state[0])/2))]
+            j_values = list(map(lambda x: x*self.scalar, j_values + [j_values[-1]] + j_values.copy()[::-1]))
 
-    def discending_diagonal_not_blocked(self, board_state:list(list(int)), col:int, row:int, number_of_squares:int, opponent_player:int) -> bool:
-        pass
+        board_values = []
+        for i in range(0,len(self.board_state)):
+            board_values.append([])
+            for j in range(0,int(len(self.board_state[0]))):
+                board_values[i].append((i_values[i] + j_values[j]))
+        return board_values

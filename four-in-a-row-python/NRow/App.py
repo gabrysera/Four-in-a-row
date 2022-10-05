@@ -30,7 +30,7 @@ class App:
         heuristic1 = AdvancedHeuristic(game_n)
         heuristic2 = SimpleHeuristic(game_n)
 
-        human = MinMaxPlayer(1, game_n, 3, heuristic1)
+        human = AlphaBetaPlayer(1, game_n, 6, heuristic1)
         human2 = HumanPlayer(2, game_n, heuristic2)
 
         players = [human, human2]
