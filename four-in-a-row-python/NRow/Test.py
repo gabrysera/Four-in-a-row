@@ -35,9 +35,15 @@ class Test:
         self.name = "test"
 
     def test_alpha_beta_vs_min_max_with_different_width(self):
-        for depth in range(2,9,1):
+        """
+        this tests the difference in number of evaluations computed by alpha beta player compared to min max player. It does so by 
+        testing the game at different depths and different widths, since these 2 parameters are the ones that count the most in the overall
+        complexity. It then print pictures representing the results and put them in the folder four-in-a-row-python/NRow/Results/
+        """
+        area_differences = []
+        for depth in range(2,8,1):
             total_board_evaluations_same_depth = []
-
+            
             for width in range(5,13,2):
                 game_n = 4
                 board_width = width
@@ -46,8 +52,13 @@ class Test:
                 game= Game(game_n, board_width, board_height, players)
                 total_board_evaluations_same_depth.append(game.start_game())
             
-            self.test_plot(total_board_evaluations_same_depth, depth)
-    
+            area_differences.append(self.test_plot(total_board_evaluations_same_depth, depth))
+        plt.plot(range(2,8,1), area_differences)
+        plt.xlabel("depth")
+        plt.ylabel("evaluations")
+        plt.title('number of evaluations given the depth')
+        plt.savefig(f'four-in-a-row-python/NRow/Results/evaluations_given_depth')
+
     def test_plot(self, players_number_of_evaluations:list(tuple(int,int)), depth:int):
         
         players_lists = list(map(list, zip(*players_number_of_evaluations)))
@@ -65,3 +76,10 @@ class Test:
         plt.legend()
         plt.savefig(f'four-in-a-row-python/NRow/Results/depth: {depth}')
         plt.close()
+        return area_difference
+
+
+    def test_new_heuristic():
+        pass
+
+    

@@ -62,4 +62,4 @@ class App:
         """
         test = Test()
         test.test_alpha_beta_vs_min_max_with_different_width()
-        test.test_new_heuristic()
+        #test.test_new_heuristic()
