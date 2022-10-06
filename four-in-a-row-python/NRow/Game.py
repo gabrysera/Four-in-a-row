@@ -14,7 +14,7 @@ class Game:
         self.game_board:Board = Board(board_width, board_heigth)
 
     #start game and keep make players move until game is finished, return the idplayer that win
-    def start_game(self) -> int:
+    def start_game(self) -> tuple(int,int):
         print("start game!")
         current_player = 0
 
@@ -32,7 +32,7 @@ class Game:
         print(f"Player {self.players[0].__str__()} evaluated the board {self.players[0].get_eval_count()} times")
         print(f"Player {self.players[1].__str__()} evaluated the board {self.players[1].get_eval_count()} times")
 
-        return self.players[0].get_eval_count() + self.players[1].get_eval_count()
+        return (self.players[0].get_eval_count() , self.players[1].get_eval_count())
     #function that determine if the game is over
     def is_over(self) -> bool:
         self.winner = Game.winning(self.game_board.get_board_state(), self.game_n)

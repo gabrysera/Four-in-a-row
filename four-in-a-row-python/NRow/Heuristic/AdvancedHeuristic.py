@@ -27,7 +27,6 @@ class AdvancedHeuristic(Heuristic):
             int: the utility
         """
         board_state = board.get_board_state()
-        board_width = board_state
         winning = Game.winning(board_state, self.game_n)
         if winning == player:
             return sys.maxsize

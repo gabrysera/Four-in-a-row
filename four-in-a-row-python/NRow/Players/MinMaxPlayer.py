@@ -19,12 +19,8 @@ class MinMaxPlayer(PlayerController):
         Returns:
             int: the columm where the piece will be placed
         """
-        board.print_board()
         tree = MinMaxTree(Board(board=board), self.depth, self.player_id, self.heuristic, self.player_id, self.game_n)
         column = tree.get_move()
-        if Heuristic is not None:
-            print("heuristic " + self.heuristic.__str__() + " calculated the best move is: "
-             + str(column))
 
         return column - 1
 

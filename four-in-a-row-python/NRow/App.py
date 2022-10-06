@@ -1,12 +1,14 @@
 from __future__ import annotations
+
+from .Players.HumanPlayer import HumanPlayer
 from .Heuristic.SimpleHeuristic import SimpleHeuristic
 from .Players.PlayerController import PlayerController
-from .Players.HumanPlayer import HumanPlayer
+from .Players.AlphaBetaPlayer import AlphaBetaPlayer
 from .Players.MinMaxPlayer import MinMaxPlayer
 from .Players.AlphaBetaPlayer import AlphaBetaPlayer
 from .Heuristic.AdvancedHeuristic import AdvancedHeuristic, Heuristic
 from .Game import Game
-
+from .Test import Test
 class App:
 
     def __init__(self):
@@ -25,52 +27,18 @@ class App:
             game_n (int):
 
         Returns:
-            list(PlayerController): a list of size 2 with two PlayerControllers
+            list(PlayerController): a list of size 2 with One Normal player and one Alpha Beta player
         """
-        heuristic1 = AdvancedHeuristic(game_n, self.board_width, self.board_height)
+        heuristic1 = SimpleHeuristic(game_n,)
         heuristic2 = AdvancedHeuristic(game_n, self.board_width, self.board_height)
 
-        human = AlphaBetaPlayer(1, game_n, self.depth, heuristic1)
-        human2 = HumanPlayer(2, game_n,heuristic2)
+        alpha_beta_1 = AlphaBetaPlayer(1, game_n, 7, heuristic1)
+        alpha_beta_2 = AlphaBetaPlayer(2, game_n,6,heuristic2)
 
-        players = [human, human2]
+        players = [alpha_beta_1, alpha_beta_2]
         return players
 
-    def get_min_max_players(self, game_n:int) -> list(PlayerController):
-            """Determine the players for the game
-
-            Args:
-                game_n (int):
-
-            Returns:
-                list(PlayerController): a list of size 2 with two PlayerControllers
-            """
-            heuristic1 = AdvancedHeuristic(game_n, self.board_width, self.board_height)
-            heuristic2 = AdvancedHeuristic(game_n, self.board_width, self.board_height)
-
-            human = AlphaBetaPlayer(1, game_n, self.depth, heuristic1)
-            human2 = HumanPlayer(2, game_n,heuristic2)
-
-            players = [human, human2]
-            return players
-
-    def get_alpha_beta_players(self, game_n:int) -> list(PlayerController):
-        """Determine the players for the game
-
-        Args:
-            game_n (int):
-
-        Returns:
-            list(PlayerController): a list of size 2 with two PlayerControllers
-        """
-        heuristic1 = AdvancedHeuristic(game_n, self.board_width, self.board_height)
-        heuristic2 = AdvancedHeuristic(game_n, self.board_width, self.board_height)
-
-        human = AlphaBetaPlayer(1, game_n, self.depth, heuristic1)
-        human2 = HumanPlayer(2, game_n,heuristic2)
-
-        players = [human, human2]
-        return players
+    
 
 
     def play_normal_game(self):
@@ -82,15 +50,16 @@ class App:
         self.game.start_game()
 
     def test(self):
-        #we change a parameter while keeping the other parameters constant for each test to see how this impact performance of the 2 algorithms 
-        total_board_evaluations_min_max = []
-        for width in range(5,13,2):
-            self.game_n = 4
-            self.depth = 6
-            self.board_width = width
-            self.board_height = 6
-            self.players = self.get_min_max_players(self.game_n)
-            self.game= Game(self.game_n, self.board_width, self.board_height, self.players)
-
-            total_board_evaluations_min_max.append(self.game.start_game())
-        print("min max players evaluated the board: ", total_board_evaluations_min_max)
+        """
+        In the following function we test:
+            1) difference in computational cost between min max and alpha beta pruning, this is done by:
+                - testing how many times they evaluate the board for different board width by running many games with different depths for both with and without alpha beta pruning players
+                - testing how many times they evaluate the board for different depth by running many games with different depths and widths
+            2) How good is the new heuristic compared to the simple one, this is done by:
+                - let 2 alpha beta players play against each other, one with depth x using the simple heuristic, the other one with 
+                depth (x-1) using the advanced heuristic. if the advanced heuristic win we go on testing for depth (x-2) and so on. 
+                The difference in depth is therefore used as an indicator for better an heuristic is compared to the other
+        """
+        test = Test()
+        test.test_alpha_beta_vs_min_max_with_different_width()
+        test.test_new_heuristic()
