@@ -29,7 +29,7 @@ class Tree(ABC):
         """
         children_values:list(tuple(int, int)) = self.get_children_values(self.get_children())
         if self.player_id == self.evaluation_player:
-            max_value = max(children_values, key=lambda x: x[0]) # wouldn't python already sort based on the first elem of the tuple? (--->int<---, int)
+            max_value = max(children_values, key=lambda x: x[0])
             return max_value
         else:
             min_value = min(children_values, key=lambda x: x[0])
