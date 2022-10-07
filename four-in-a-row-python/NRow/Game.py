@@ -14,7 +14,7 @@ class Game:
         self.game_board:Board = Board(board_width, board_heigth)
 
     #start game and keep make players move until game is finished, return the idplayer that win
-    def start_game(self) -> tuple(int,int):
+    def start_game(self) -> tuple[int,int]:
         print("start game!")
         current_player = 0
 
