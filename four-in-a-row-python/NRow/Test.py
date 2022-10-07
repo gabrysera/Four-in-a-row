@@ -22,7 +22,7 @@ def get_test_players(game_n:int, depth:int, board_width:int, board_height:int) -
     players = [alpha_beta_1, alpha_beta_2]
     return players
 
-def compute_area_difference(x:list(int), y:list(int))->int:
+def compute_area_difference(x:list[int], y:list[int])->int:
     """
     from 2 arrays of integers, return the difference between the
     areas of the curves that these 2 arrays would generate if plotted
@@ -59,7 +59,7 @@ class Test:
         plt.title('number of evaluations given the depth')
         plt.savefig(f'four-in-a-row-python/NRow/Results/evaluations_given_depth')
 
-    def test_plot(self, players_number_of_evaluations:list(tuple(int,int)), depth:int):
+    def test_plot(self, players_number_of_evaluations:list[tuple[int,int]], depth:int):
         
         players_lists = list(map(list, zip(*players_number_of_evaluations)))
         aplha_beta_player = np.asarray(players_lists[0])
