@@ -63,7 +63,7 @@ class AdvancedHeuristic(Heuristic):
                             break
         return max_in_row
 
-    def compute_board_heuristic(self, board_width:int, board_heigth:int) -> list(list(int)):
+    def compute_board_heuristic(self, board_width:int, board_heigth:int) -> list[list[int]]:
         
         
         i_values = [x for x in range(int(board_width/2))]
