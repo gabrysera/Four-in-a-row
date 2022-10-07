@@ -29,10 +29,10 @@ class App:
         Returns:
             list(PlayerController): a list of size 2 with One Normal player and one Alpha Beta player
         """
-        heuristic1 = SimpleHeuristic(game_n,)
+        heuristic1 = SimpleHeuristic(game_n)
         heuristic2 = AdvancedHeuristic(game_n, self.board_width, self.board_height)
 
-        alpha_beta_1 = AlphaBetaPlayer(1, game_n, 7, heuristic1)
+        alpha_beta_1 = HumanPlayer(1, game_n, heuristic1)
         alpha_beta_2 = AlphaBetaPlayer(2, game_n,6,heuristic2)
 
         players = [alpha_beta_1, alpha_beta_2]
